@@ -29,7 +29,7 @@ What is 197 * 42?
 
 3. **Create virtual environment and install dependencies**:
    ```bash
-   python3 -m venv venv
+   python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```

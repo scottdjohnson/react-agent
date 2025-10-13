@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 Simple ReAct Agent
 """
@@ -9,17 +8,16 @@ from langchain_core.prompts import PromptTemplate
 
 from tools import calculator_tool 
 
-LLM = "qwen2.5:7b"
-
+# PROJECT: Create your own agent by adding tools and modiying the prompt
 tools = [
     calculator_tool,
     # Add more tools here, e.g.:
     # random_int_tool, etc.
 ]
 
-# ReAct Prompt Template
-# Modify this prompt to change how the agent thinks and acts
-# In general, change only the first line to tell the agent what to do, do not change the rest.
+
+# Consider adding a line at the beginning of the prompt to give the agent instructions
+# This might help the agent perform better
 PROMPT_TEMPLATE = """
 Answer the following questions as best you can. You have access to the following tools:
 
@@ -42,6 +40,10 @@ Question: {input}
 Thought: {agent_scratchpad}"""
 
 PROMPT = PromptTemplate.from_template(PROMPT_TEMPLATE)
+
+
+# Test agent with alternate models
+LLM = "qwen2.5:7b"
 
 
 def create_agent():
