@@ -1,6 +1,16 @@
-# React Agent Calculator
+# React Agent Example
 
-A simple ReAct agent using LangChain and Ollama.
+A simple ReAct agent using LangChain and Ollama, for learning about AI Agent development.
+
+## Exercise
+1. Run this agent with no changes. It should be able to answer simple math questions, such as:
+```
+What is 197 * 42?
+```
+2. Update the agent so that it performs different operations:
+* Update the list of tools at the top of agent.py, using the Tool function defined in tools.py
+* Test the agent using different LLMs to see if one produces better results.
+* Advanced: Create new tools!
 
 ## Prerequisites
 
