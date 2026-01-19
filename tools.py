@@ -10,6 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from langchain.tools import Tool
+import wikipedia
 
 from utils import make_request
 
@@ -185,26 +186,42 @@ def read(filename: str) -> str:
 
 def write(input_str: str) -> str:
     """Write content to a file in the files directory.
-    
+
     Input format: "filename|content" where | is the separator.
     """
     print(f"\n✍️  Write file tool running...\n")
     print(f"[TOOL] Executing write")
-    
+
     try:
         # Parse input
         if "|" not in input_str:
             return "Error: Input must be in format 'filename|content'\n"
-        
+
         parts = input_str.split("|", 1)
         filename = parts[0].strip()
         content = parts[1] if len(parts) > 1 else ""
-        
+
         file_path = _validate_and_get_file_path(filename)
         file_path.write_text(content)
         return f"Successfully wrote {len(content)} characters to '{filename}'\n"
     except Exception as e:
         return f"Error writing file: {str(e)}\n"
+
+
+def wikipedia_search(query: str) -> str:
+    """Search Wikipedia for information on a given topic."""
+    print(f"\n📖 Wikipedia tool running...\n")
+    print(f"[TOOL] Executing wikipedia_search with parameters: query='{query}'")
+
+    try:
+        summary = wikipedia.summary(query)
+        return f"Wikipedia summary for '{query}':\n{summary}\n"
+    except wikipedia.exceptions.DisambiguationError as e:
+        return f"Multiple results found for '{query}'. Please be more specific. Some options: {', '.join(e.options[:5])}\n"
+    except wikipedia.exceptions.PageError:
+        return f"No Wikipedia page found for '{query}'\n"
+    except Exception as e:
+        return f"Error querying Wikipedia: {str(e)}\n"
 
 
 
@@ -256,4 +273,10 @@ write_tool = Tool(
     name="write",
     func=write,
     description="Writes content to a file in the files directory. Input format must be 'filename|content' where the pipe character (|) separates the filename from the content. For example: 'notes.txt|Hello world'. Only flat filenames are allowed - no paths or '..' sequences. Creates or overwrites the file. Use this tool when you need to save data to a file.",
+)
+
+wikipedia_tool = Tool(
+    name="wikipedia_tool",
+    func=wikipedia_search,
+    description="Searches Wikipedia for information on a given topic. Input should be a search query or topic name (e.g., 'Python programming', 'World War II', 'Isaac Newton'). Returns a summary from Wikipedia. Use this tool when you need to look up factual information or learn about a topic.",
 )

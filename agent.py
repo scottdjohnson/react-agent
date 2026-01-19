@@ -6,16 +6,17 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 
-from tools import calculator_tool, random_int_tool, geocode_tool, weather_tool, ls_tool, read_tool, write_tool
+from tools import calculator_tool, random_int_tool, geocode_tool, weather_tool, ls_tool, read_tool, write_tool, wikipedia_tool
 
 # PROJECT: Create your own agent by adding tools and modiying the prompt
 tools = [
     calculator_tool,
     # random_int_tool,
     # geocode_tool,
-    # weather_tool
+    # weather_tool,
     # read_tool,
-    # write_tool
+    # write_tool,
+    wikipedia_tool
 ]
 
 
