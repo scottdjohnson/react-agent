@@ -6,17 +6,20 @@ from langchain.agents import AgentExecutor, create_react_agent
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import PromptTemplate
 
-from tools import calculator_tool 
+from tools import calculator_tool, random_int_tool, geocode_tool, weather_tool, ls_tool, read_tool, write_tool
 
 # PROJECT: Create your own agent by adding tools and modiying the prompt
 tools = [
     calculator_tool,
-    # Add more tools here, e.g.:
-    # random_int_tool, etc.
+    # random_int_tool,
+    # geocode_tool,
+    # weather_tool
+    # read_tool,
+    # write_tool
 ]
 
 
-# Consider adding a line at the beginning of the prompt to give the agent instructions
+# Consider adding a line at the beginning of the prompt to give the agent instructions for your specific use case
 # This might help the agent perform better
 PROMPT_TEMPLATE = """
 Answer the following questions as best you can. You have access to the following tools:
@@ -73,9 +76,10 @@ def main():
     print("Type 'exit' or 'quit' to stop.\n")
     
     agent_executor = create_agent()
-    
+
     while True:
         # Get user input
+
         try:
             query = input("📝 Enter your query: ").strip()
             
